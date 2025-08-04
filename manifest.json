@@ -1,11 +1,11 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
-	"version": "1.0.0",
+	"id": "fogsong.typsidian",
+	"name": "typsidian",
+	"version": "1.0.0-alpha01",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"description": "The most perfect implemention to replace latex with typst in obsidian so far.",
+	"author": "fogsong",
+	"authorUrl": "https://github.com/fogsong233",
+	"fundingUrl": "",
 	"isDesktopOnly": false
 }

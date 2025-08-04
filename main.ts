@@ -1,57 +1,44 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
-
-// Remember to rename these classes and interfaces!
-
-interface MyPluginSettings {
-	mySetting: string;
-}
-
-const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: 'default'
-}
+import {
+	App,
+	MarkdownView,
+	Modal,
+	Notice,
+	Plugin,
+	loadMathJax,
+} from "obsidian";
+import { DEFAULT_SETTINGS, MyPluginSettings, MySettingTab } from "src/settings";
+import { typst2tex } from "tex2typst";
+import TypstSvgElement from "src/typst-svg-element";
+import { converterGen, transformMDWithoutTypst } from "src/converter";
+import { $typst } from "@myriaddreamin/typst.ts";
+declare const MathJax: any;
 
 export default class MyPlugin extends Plugin {
 	settings: MyPluginSettings;
-
+	tex2html: any; // mathjax tex2chtml function
 	async onload() {
 		await this.loadSettings();
-
-		// This creates an icon in the left ribbon.
-		const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (evt: MouseEvent) => {
-			// Called when the user clicks the icon.
-			new Notice('This is a notice!');
+		// init typst
+		$typst.setCompilerInitOptions({
+			getModule: () =>
+				"https://cdn.jsdelivr.net/npm/@myriaddreamin/typst-ts-web-compiler/pkg/typst_ts_web_compiler_bg.wasm",
 		});
-		// Perform additional things with the ribbon
-		ribbonIconEl.addClass('my-plugin-ribbon-class');
-
+		$typst.setRendererInitOptions({
+			getModule: () =>
+				"https://cdn.jsdelivr.net/npm/@myriaddreamin/typst-ts-renderer/pkg/typst_ts_renderer_bg.wasm",
+		});
 		// This adds a status bar item to the bottom of the app. Does not work on mobile apps.
 		const statusBarItemEl = this.addStatusBarItem();
-		statusBarItemEl.setText('Status Bar Text');
+		statusBarItemEl.setText("Typsidian");
 
-		// This adds a simple command that can be triggered anywhere
-		this.addCommand({
-			id: 'open-sample-modal-simple',
-			name: 'Open sample modal (simple)',
-			callback: () => {
-				new SampleModal(this.app).open();
-			}
-		});
-		// This adds an editor command that can perform some operation on the current editor instance
-		this.addCommand({
-			id: 'sample-editor-command',
-			name: 'Sample editor command',
-			editorCallback: (editor: Editor, view: MarkdownView) => {
-				console.log(editor.getSelection());
-				editor.replaceSelection('Sample Editor Command');
-			}
-		});
 		// This adds a complex command that can check whether the current state of the app allows execution of the command
 		this.addCommand({
-			id: 'open-sample-modal-complex',
-			name: 'Open sample modal (complex)',
+			id: "open-sample-modal-complex",
+			name: "Open sample modal (complex)",
 			checkCallback: (checking: boolean) => {
 				// Conditions to check
-				const markdownView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				const markdownView =
+					this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (markdownView) {
 					// If checking is true, we're simply "checking" if the command can be run.
 					// If checking is false, then we want to actually perform the operation.
@@ -62,32 +49,92 @@ export default class MyPlugin extends Plugin {
 					// This command will only show up in Command Palette when the check function returns true
 					return true;
 				}
-			}
+			},
+		});
+
+		this.addCommand({
+			id: "duplicate-normal-note-with-png",
+			name: "duplicate a normal note with typst transformed, img is png format",
+			editorCallback: converterGen(true),
+		});
+		this.addCommand({
+			id: "duplicate-normal-note-with-svg",
+			name: "duplicate a normal note with typst transformed, img is svg format",
+			editorCallback: converterGen(false),
 		});
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new SampleSettingTab(this.app, this));
-
-		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
-		// Using this function will automatically remove the event listener when this plugin is disabled.
-		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-			console.log('click', evt);
-		});
-
-		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
-		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
+		this.addSettingTab(new MySettingTab(this.app, this));
+		await loadMathJax();
+		this.tex2html = MathJax.tex2chtml;
+		MathJax.tex2chtml = (e: string, r: { display: boolean }) =>
+			this.typstTex2Html(e, r); // avoid this binding
+		this.registerMarkdownCodeBlockProcessor(
+			"typrender",
+			(source, el, ctx) => {
+				const typstEl = document.createElement(
+					"typst-svg"
+				) as TypstSvgElement;
+				typstEl.typstContent = `${this.settings.typstRenderCodeTemplate} \n 
+				/*__typsidian-divider*/
+				${source}`;
+				typstEl.plugin = this;
+				el.appendChild(typstEl);
+			}
+		);
 	}
 
 	onunload() {
-
+		MathJax.tex2chtml = this.tex2html;
 	}
 
 	async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		this.settings = Object.assign(
+			{},
+			DEFAULT_SETTINGS,
+			await this.loadData()
+		);
 	}
 
 	async saveSettings() {
 		await this.saveData(this.settings);
+		this.app.workspace
+			.getActiveViewOfType(MarkdownView)
+			?.previewMode.rerender(true);
+	}
+	typstTex2Html(source: string, r: { display: boolean }): ChildNode | null {
+		try {
+			if (r.display) {
+				if (this.settings.enableMathTypst) {
+					if (this.settings.enableTypst2TexInMath) {
+						return this.tex2html(typst2tex(source), r);
+					} else {
+						TypstSvgElement.regisiter();
+						const el = document.createElement(
+							"typst-svg"
+						) as TypstSvgElement;
+						el.typstContent = `${this.settings.mathTypstTemplate} \n 
+						/*__typsidian-divider*/
+						$ ${source} $`;
+						el.plugin = this;
+						return el;
+					}
+				}
+			} else if (this.settings.enableInlineMathTypst) {
+				if (source.includes("\\")) {
+					throw new Error("illegal typst math code.");
+				}
+				return this.tex2html(typst2tex(source), r);
+			}
+			return this.tex2html(source, r);
+		} catch (error) {
+			if (this.settings.enableFallBackToTex) {
+				return this.tex2html(source, r);
+			}
+			const renderedString = `<span style="color: red;">${error}</span>`;
+			return new DOMParser().parseFromString(renderedString, "text/html")
+				.body.firstChild;
+		}
 	}
 }
 
@@ -97,38 +144,12 @@ class SampleModal extends Modal {
 	}
 
 	onOpen() {
-		const {contentEl} = this;
-		contentEl.setText('Woah!');
+		const { contentEl } = this;
+		contentEl.setText("Woah!");
 	}
 
 	onClose() {
-		const {contentEl} = this;
+		const { contentEl } = this;
 		contentEl.empty();
-	}
-}
-
-class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
-
-	constructor(app: App, plugin: MyPlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
-	}
-
-	display(): void {
-		const {containerEl} = this;
-
-		containerEl.empty();
-
-		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.mySetting)
-				.onChange(async (value) => {
-					this.plugin.settings.mySetting = value;
-					await this.plugin.saveSettings();
-				}));
 	}
 }
