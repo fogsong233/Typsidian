@@ -1,0 +1,91 @@
+# workflow name
+# 工作流名称
+name: Release Plugin
+
+# Trigger the workflow when a tag is pushed.
+# 当一个标签被推送到仓库时触发此工作流。
+# The tag must start with 'v' (e.g., v1.0.0).
+# 标签必须以 'v' 开头（例如 v1.0.0）。
+on:
+    push:
+        tags:
+            - "v*"
+
+# Grant the workflow permissions to write to the repository.
+# This is necessary for creating the GitHub Release.
+# 授予工作流写入仓库的权限，这是创建GitHub Release所必需的。
+permissions:
+    contents: write
+
+# Define a single job named 'release'.
+# 定义一个名为 'release' 的作业。
+jobs:
+    release:
+        # Run the job on the latest version of Ubuntu.
+        # 在最新版本的Ubuntu上运行此作业。
+        runs-on: ubuntu-latest
+
+        # A sequence of steps to be executed in the job.
+        # 作业中要执行的一系列步骤。
+        steps:
+            # Step 1: Checkout the code from the repository.
+            # 步骤1：从仓库中检出代码。
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            # Step 2: Set up pnpm.
+            # 步骤2：设置pnpm。
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v3
+              with:
+                  version: 8
+                  run_install: false
+
+            # Step 3: Set up Node.js environment.
+            # 步骤3：设置Node.js环境。
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "22"
+                  cache: "pnpm"
+
+            # Step 4: Install dependencies using pnpm.
+            # 步骤4：使用pnpm安装依赖。
+            - name: Install dependencies
+              run: pnpm install
+
+            # Step 5: Build the plugin.
+            # This runs the 'build' script defined in package.json.
+            # 步骤5：构建插件。
+            # 这将运行 package.json 中定义的 'build' 脚本。
+            - name: Build plugin-1
+              run: pnpm run build
+
+            - name: Build plugin-2
+              run: pnpm run version
+
+            # Step 6: Create a GitHub Release.
+            # 步骤6：创建GitHub Release。
+            - name: Create Release
+              uses: softprops/action-gh-release@v1
+              with:
+                  # Use the tag name as the release tag.
+                  # 使用标签名作为 Release 的标签。
+                  tag_name: ${{ github.ref_name }}
+                  # Use the tag name for the release title.
+                  # 使用标签名作为 Release 的标题。
+                  name: Release ${{ github.ref_name }}
+                  # Set as not a draft release.
+                  # 设为非草稿发布。
+                  draft: false
+                  # Set as not a pre-release.
+                  # 设为非预发布。
+                  prerelease: false
+                  # Attach the specified files to the release.
+                  # If 'styles.css' does not exist, the action will simply not include it.
+                  # 将指定的文件作为附件上传到 Release。
+                  # 如果 'styles.css' 不存在，此操作将不会包含它。
+                  files: |
+                      main.js
+                      manifest.json
+                      styles.css
