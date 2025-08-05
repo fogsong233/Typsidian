@@ -91,7 +91,6 @@ async function transformMDWithoutTypst(
 				tree,
 				(node) => node.children || [],
 				async (node) => {
-					new Notice(`Processing node: ${node}`);
 					const imgPath = `${
 						plugin.settings.uploadImageDir
 					}/${Date.now()}-${randomUUID()}.${
@@ -200,20 +199,22 @@ export function converterGen(
 	convertToPng: boolean
 ): (editor: Editor, view: MarkdownView) => Promise<void> {
 	return async (editor: Editor, view: MarkdownView) => {
-		// try {
-		const newMDText = await transformMDWithoutTypst(
-			plugin,
-			editor.getValue(),
-			{ convertToPng }
-		);
-		const newFilePath =
-			view.file?.path.split(".")[0] +
-			`-notypst${convertToPng ? "png" : "svg"}.md`;
-		this.app.vault.create(newFilePath, newMDText);
-		// } catch (error) {
-		// new Notice(
-		// "Error duplicating note with typst transformed: " + error
-		// );
-		// }
+		try {
+			new Notice("processing...");
+			const newMDText = await transformMDWithoutTypst(
+				plugin,
+				editor.getValue(),
+				{ convertToPng }
+			);
+			const newFilePath =
+				view.file?.path.split(".")[0] +
+				`-notypst${convertToPng ? "png" : "svg"}.md`;
+			this.app.vault.create(newFilePath, newMDText);
+			new Notice("Successfully created");
+		} catch (error) {
+			new Notice(
+				"Error when duplicating note with typst transformed: " + error
+			);
+		}
 	};
 }

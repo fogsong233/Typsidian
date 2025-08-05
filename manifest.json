@@ -1,7 +1,7 @@
 {
 	"id": "fogsong.typsidian",
 	"name": "typsidian",
-	"version": "1.0.0-alpha01",
+	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
 	"description": "The most perfect implemention to replace latex with typst in obsidian so far.",
 	"author": "fogsong",
