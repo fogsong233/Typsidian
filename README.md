@@ -4,12 +4,9 @@ non-typst markdown file for other markdown platform.
 
 中文介绍看这里:  施工中
 
-You can modify settings to make any of `$..$`, `$$...$$`,
-```
-```typrender
-...
-```
-```
+You can modify settings to make any of `$..$`, `$$...$$`, and code block
+whose language is `typrender`.
+
 display typst code rather than latex code, and it provides
 that when typst parsing gets errors, display automatically
 return to latex(please enable it in settings).
