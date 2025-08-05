@@ -10,6 +10,7 @@ import { unified } from "unified";
 import Base64 from "./base64";
 import { $typst } from "@myriaddreamin/typst.ts";
 import { Editor, MarkdownView, Notice } from "obsidian";
+import remarkFrontmatter from "remark-frontmatter";
 interface MDNode {
 	type: string;
 	children?: MDNode[];
@@ -161,7 +162,8 @@ async function transformMDWithoutTypst(
 				}
 			);
 		})
-		.use(remarkStringify);
+		.use(remarkStringify)
+		.use(remarkFrontmatter, ["yaml"]);
 	const mdRes = await mdProcessor.process(mdText);
 	return String(mdRes);
 }

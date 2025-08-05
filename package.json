@@ -26,6 +26,7 @@
 		"@myriaddreamin/typst-ts-web-compiler": "0.6.1-rc2",
 		"@myriaddreamin/typst.ts": "0.6.1-rc2",
 		"@octokit/rest": "^22.0.0",
+		"remark-frontmatter": "^5.0.0",
 		"remark-math": "^6.0.0",
 		"remark-parse": "^11.0.0",
 		"remark-stringify": "^11.0.0",
