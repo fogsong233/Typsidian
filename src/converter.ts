@@ -62,30 +62,15 @@ class GithubUploader {
 	}
 }
 
-function svgToPngBase64(svgText: string): Promise<string> {
-	const svg = new Blob([svgText], { type: "image/svg+xml" });
-	const url = URL.createObjectURL(svg);
-
-	return new Promise((resolve, reject) => {
-		const img = new Image();
-		img.onload = function () {
-			const canvas = document.createElement("canvas");
-			const ctx = canvas.getContext("2d");
-
-			canvas.width = img.width;
-			canvas.height = img.height;
-
-			ctx.drawImage(img, 0, 0);
-
-			const pngBase64 = canvas.toDataURL("image/png");
-			resolve(pngBase64.split("data:image/png;base64,")[0]);
-		};
-		img.onerror = reject;
-		img.src = url;
-	});
+async function typstToPngBase64(typstContent: string): Promise<string> {
+	const div = document.createElement("div");
+	await $typst.canvas(div, { mainContent: typstContent });
+	const canvas = div.querySelectorAll("canvas")[0];
+	const pngBase64 = canvas.toDataURL("image/png").split(",")[1];
+	return pngBase64;
 }
 
-export async function transformMDWithoutTypst(
+async function transformMDWithoutTypst(
 	plugin: MyPlugin,
 	mdText: string,
 	config: { convertToPng: boolean } = { convertToPng: false }
@@ -121,14 +106,29 @@ export async function transformMDWithoutTypst(
 							plugin.settings.enableMathTypst &&
 							!!plugin.settings.enableFallBackToTex)
 					) {
-						const source = node.value || "";
-						const svgText = await $typst.svg({
-							mainContent: `${plugin.settings.typstRenderCodeTemplate} \n ${source}`,
-						});
+						const source = `${
+							plugin.settings.typstRenderCodeTemplate
+						} \n  ${
+							node.type === "math"
+								? "$ " + node.value + " $"
+								: node.value
+						}`;
+
 						let imgBase64 = "";
 						if (config.convertToPng) {
-							imgBase64 = await svgToPngBase64(svgText);
+							imgBase64 = await typstToPngBase64(source);
 						} else {
+							const svgText = await $typst.svg({
+								mainContent: source,
+
+								// compromise with normal render in img element, therefore not copyable.
+								data_selection: {
+									js: false,
+									body: true,
+									css: true,
+									defs: true,
+								},
+							});
 							imgBase64 = Base64.encode(svgText);
 						}
 						const link = await githubUploader.uploadTo(
@@ -154,7 +154,7 @@ export async function transformMDWithoutTypst(
 					) {
 						if (plugin.settings.enableInlineMathTypst) {
 							const content = node.value || "";
-							node.value = typst2tex(content);
+							node.value = typst2tex(content).replace("\n", " "); // inline mode does not have "\n"
 						}
 						return node;
 					}
@@ -194,21 +194,24 @@ async function visit<E>(
 }
 
 export function converterGen(
+	plugin: MyPlugin,
 	convertToPng: boolean
 ): (editor: Editor, view: MarkdownView) => Promise<void> {
 	return async (editor: Editor, view: MarkdownView) => {
-		try {
-			const newMDText = await transformMDWithoutTypst(
-				this,
-				editor.getValue(),
-				{ convertToPng }
-			);
-			const newFilePath = view.file?.path.split(".")[0] + "-notypst.md";
-			this.app.vault.create(newFilePath, newMDText);
-		} catch (error) {
-			new Notice(
-				"Error duplicating note with typst transformed: " + error
-			);
-		}
+		// try {
+		const newMDText = await transformMDWithoutTypst(
+			plugin,
+			editor.getValue(),
+			{ convertToPng }
+		);
+		const newFilePath =
+			view.file?.path.split(".")[0] +
+			`-notypst${convertToPng ? "png" : "svg"}.md`;
+		this.app.vault.create(newFilePath, newMDText);
+		// } catch (error) {
+		// new Notice(
+		// "Error duplicating note with typst transformed: " + error
+		// );
+		// }
 	};
 }

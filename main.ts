@@ -9,7 +9,7 @@ import {
 import { DEFAULT_SETTINGS, MyPluginSettings, MySettingTab } from "src/settings";
 import { typst2tex } from "tex2typst";
 import TypstSvgElement from "src/typst-svg-element";
-import { converterGen, transformMDWithoutTypst } from "src/converter";
+import { converterGen } from "src/converter";
 import { $typst } from "@myriaddreamin/typst.ts";
 declare const MathJax: any;
 
@@ -55,12 +55,12 @@ export default class MyPlugin extends Plugin {
 		this.addCommand({
 			id: "duplicate-normal-note-with-png",
 			name: "duplicate a normal note with typst transformed, img is png format",
-			editorCallback: converterGen(true),
+			editorCallback: converterGen(this, true),
 		});
 		this.addCommand({
 			id: "duplicate-normal-note-with-svg",
 			name: "duplicate a normal note with typst transformed, img is svg format",
-			editorCallback: converterGen(false),
+			editorCallback: converterGen(this, false),
 		});
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
