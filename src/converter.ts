@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { Octokit } from "@octokit/rest";
 import { randomUUID } from "crypto";
-import MyPlugin from "main";
+import TypsidianPlugin from "main";
 import remarkMath from "remark-math";
 import remarkParse from "remark-parse";
 import remarkStringify from "remark-stringify";
@@ -72,7 +72,7 @@ async function typstToPngBase64(typstContent: string): Promise<string> {
 }
 
 async function transformMDWithoutTypst(
-	plugin: MyPlugin,
+	plugin: TypsidianPlugin,
 	mdText: string,
 	config: { convertToPng: boolean } = { convertToPng: false }
 ): Promise<string> {
@@ -195,7 +195,7 @@ async function visit<E>(
 }
 
 export function converterGen(
-	plugin: MyPlugin,
+	plugin: TypsidianPlugin,
 	convertToPng: boolean
 ): (editor: Editor, view: MarkdownView) => Promise<void> {
 	return async (editor: Editor, view: MarkdownView) => {

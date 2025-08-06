@@ -1,7 +1,7 @@
-import MyPlugin from "main";
+import TypsidianPlugin from "main";
 import { App, PluginSettingTab, Setting } from "obsidian";
 
-export interface MyPluginSettings {
+export interface TypsidianPluginSettings {
 	enableMathTypst: boolean;
 	enableInlineMathTypst: boolean;
 	enableTypstRenderCode: boolean; // typrender
@@ -14,7 +14,7 @@ export interface MyPluginSettings {
 	uploadImageDir: string;
 }
 
-export const DEFAULT_SETTINGS: MyPluginSettings = {
+export const DEFAULT_SETTINGS: TypsidianPluginSettings = {
 	enableMathTypst: true,
 	enableInlineMathTypst: true,
 	enableTypstRenderCode: true,
@@ -28,10 +28,10 @@ export const DEFAULT_SETTINGS: MyPluginSettings = {
 	typstRenderCodeTemplate:
 		"#set page(width: auto, height: auto, margin: 10pt) \n #set text(size: 16pt) \n",
 };
-export class MySettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+export class TypsidiannettingTab extends PluginSettingTab {
+	plugin: TypsidianPlugin;
 
-	constructor(app: App, plugin: MyPlugin) {
+	constructor(app: App, plugin: TypsidianPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}

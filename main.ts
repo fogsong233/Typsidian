@@ -6,15 +6,19 @@ import {
 	Plugin,
 	loadMathJax,
 } from "obsidian";
-import { DEFAULT_SETTINGS, MyPluginSettings, MySettingTab } from "src/settings";
+import {
+	DEFAULT_SETTINGS,
+	TypsidianPluginSettings,
+	TypisidianSettingTab,
+} from "src/settings";
 import { typst2tex } from "tex2typst";
 import TypstSvgElement from "src/typst-svg-element";
 import { converterGen } from "src/converter";
 import { $typst } from "@myriaddreamin/typst.ts";
 declare const MathJax: any;
 
-export default class MyPlugin extends Plugin {
-	settings: MyPluginSettings;
+export default class TypsidianPlugin extends Plugin {
+	settings: TypsidianPluginSettings;
 	tex2html: any; // mathjax tex2chtml function
 	async onload() {
 		await this.loadSettings();
@@ -43,7 +47,7 @@ export default class MyPlugin extends Plugin {
 		});
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new MySettingTab(this.app, this));
+		this.addSettingTab(new TypisidianSettingTab(this.app, this));
 		await loadMathJax();
 		this.tex2html = MathJax.tex2chtml;
 		MathJax.tex2chtml = (e: string, r: { display: boolean }) =>
