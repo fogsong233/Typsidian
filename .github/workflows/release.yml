@@ -9,7 +9,7 @@ name: Release Plugin
 on:
     push:
         tags:
-            - "v*"
+            - "*"
 
 # Grant the workflow permissions to write to the repository.
 # This is necessary for creating the GitHub Release.

@@ -1,11 +1,11 @@
 {
-	"id": "fogsong.typsidian",
+	"id": "fogsong-typsidian",
 	"name": "typsidian",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"minAppVersion": "0.15.0",
-	"description": "The most perfect implemention to replace latex with typst in obsidian so far.",
+	"description": "Typsidian is a plugin, which provides releted functions of [typst](https://typst.app), suchs as correct display of typst code, export non-typst markdown file for other markdown platform.",
 	"author": "fogsong",
 	"authorUrl": "https://github.com/fogsong233",
 	"fundingUrl": "",
-	"isDesktopOnly": false
+	"isDesktopOnly": true
 }
