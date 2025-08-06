@@ -1,7 +1,7 @@
 ![](./res/title.gif)
 Typsidian is a plugin of [Obsidian](https://obsidian.md/), which provides releted functions of [typst](https://typst.app), suchs as correct display of typst code, export non-typst markdown file for other markdown platform.
 
-中文介绍看这里:  施工中
+中文介绍看这里:  https://zhuanlan.zhihu.com/p/1936210614520361485
 
 You can modify settings to make any of `$..$`, `$$...$$`, and code block
 whose language is `typrender`.
