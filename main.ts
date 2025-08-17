@@ -9,12 +9,14 @@ import {
 import {
 	DEFAULT_SETTINGS,
 	TypsidianPluginSettings,
-	TypisidianSettingTab,
+	TypsidianSettingTab,
 } from "src/settings";
 import { typst2tex } from "tex2typst";
 import TypstSvgElement from "src/typst-svg-element";
 import { converterGen } from "src/converter";
 import { $typst } from "@myriaddreamin/typst.ts";
+import { TypstSnippet } from "@myriaddreamin/typst.ts/dist/esm/contrib/snippet.mjs";
+import { fontInit } from "src/font";
 declare const MathJax: any;
 
 export default class TypsidianPlugin extends Plugin {
@@ -31,6 +33,8 @@ export default class TypsidianPlugin extends Plugin {
 			getModule: () =>
 				"https://cdn.jsdelivr.net/npm/@myriaddreamin/typst-ts-renderer/pkg/typst_ts_renderer_bg.wasm",
 		});
+		// add font
+		await fontInit(this.settings.supportLocalFonts);
 		// This adds a status bar item to the bottom of the app. Does not work on mobile apps.
 		const statusBarItemEl = this.addStatusBarItem();
 		statusBarItemEl.setText("typsidian √");
@@ -47,7 +51,7 @@ export default class TypsidianPlugin extends Plugin {
 		});
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new TypisidianSettingTab(this.app, this));
+		this.addSettingTab(new TypsidianSettingTab(this.app, this));
 		await loadMathJax();
 		this.tex2html = MathJax.tex2chtml;
 		MathJax.tex2chtml = (e: string, r: { display: boolean }) =>

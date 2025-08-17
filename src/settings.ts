@@ -12,6 +12,7 @@ export interface TypsidianPluginSettings {
 	typstRenderCodeTemplate: string;
 	usrAndRepo: string; //"xxx/xxx"
 	uploadImageDir: string;
+	supportLocalFonts: string;
 }
 
 export const DEFAULT_SETTINGS: TypsidianPluginSettings = {
@@ -27,8 +28,10 @@ export const DEFAULT_SETTINGS: TypsidianPluginSettings = {
 		"#set page(width: auto, height: auto, margin: 10pt) \n #set text(size: 16pt) \n",
 	typstRenderCodeTemplate:
 		"#set page(width: auto, height: auto, margin: 10pt) \n #set text(size: 16pt) \n",
+	supportLocalFonts:
+		"PingFang SC, Microsoft YaHei, Noto Serif, Noto Sans, Noto Serif, Noto Serif CJK SC, Noto Sans CJK SC",
 };
-export class TypsidiannettingTab extends PluginSettingTab {
+export class TypsidianSettingTab extends PluginSettingTab {
 	plugin: TypsidianPlugin;
 
 	constructor(app: App, plugin: TypsidianPlugin) {
@@ -126,6 +129,19 @@ export class TypsidiannettingTab extends PluginSettingTab {
 					.setValue(this.plugin.settings.uploadImageDir)
 					.onChange(async (value) => {
 						this.plugin.settings.uploadImageDir = value;
+						await this.plugin.saveSettings();
+					});
+			});
+		new Setting(containerEl)
+			.setName("向 typst 添加本地字体")
+			.setDesc("本地字体的字体名, 没有会默认忽略, 用逗号分隔")
+			.addText((text) => {
+				text.setPlaceholder(
+					"PingFang SC, Microsoft YaHei, Noto Serif, Noto Sans, Noto Serif CJK SC, Noto Sans CJK ßSC"
+				)
+					.setValue(this.plugin.settings.supportLocalFonts)
+					.onChange(async (value) => {
+						this.plugin.settings.supportLocalFonts = value;
 						await this.plugin.saveSettings();
 					});
 			});
