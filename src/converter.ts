@@ -8,9 +8,9 @@ import remarkStringify from "remark-stringify";
 import { typst2tex } from "tex2typst";
 import { unified } from "unified";
 import Base64 from "./base64";
-import { $typst } from "@myriaddreamin/typst.ts";
 import { Editor, MarkdownView, Notice } from "obsidian";
 import remarkFrontmatter from "remark-frontmatter";
+import { $typst } from "@myriaddreamin/typst.ts/dist/esm/contrib/snippet.mjs";
 interface MDNode {
 	type: string;
 	children?: MDNode[];
@@ -104,7 +104,7 @@ async function transformMDWithoutTypst(
 							plugin.settings.enableTypstRenderCode) ||
 						(node.type === "math" &&
 							plugin.settings.enableMathTypst &&
-							!!plugin.settings.enableFallBackToTex)
+							!!plugin.settings.enableFallBackToTexBlock)
 					) {
 						const source = `${
 							plugin.settings.typstRenderCodeTemplate

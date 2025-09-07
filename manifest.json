@@ -1,11 +1,27 @@
 {
 	"id": "fogsong-typsidian",
 	"name": "typsidian",
-	"version": "1.1.1",
+	"version": "1.2.0",
 	"minAppVersion": "0.15.0",
-	"description": "Typsidian is a plugin, which provides releted functions of [typst](https://typst.app), suchs as correct display of typst code, export non-typst markdown file for other markdown platform.",
+	"description": "Typsidian is a plugin, which provides related functions of [typst](https://typst.app), such as correct display of typst code, export non-typst markdown file for other markdown platform.",
 	"author": "fogsong",
 	"authorUrl": "https://github.com/fogsong233",
 	"fundingUrl": "",
-	"isDesktopOnly": true
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "lang/locale/en.ts"
+		},
+		{
+			"lang": "zh-cn",
+			"name": "简体中文",
+			"path": "lang/locale/zh-cn.ts"
+		},
+		{
+			"lang": "zh-tw",
+			"name": "繁體中文",
+			"path": "lang/locale/zh-tw.ts"
+		}
+	]
 }

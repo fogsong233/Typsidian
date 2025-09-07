@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@myriaddreamin/typst-ts-renderer':
-        specifier: 0.6.1-rc2
-        version: 0.6.1-rc2
+        specifier: 0.6.1-rc3
+        version: 0.6.1-rc3
       '@myriaddreamin/typst-ts-web-compiler':
-        specifier: 0.6.1-rc2
-        version: 0.6.1-rc2
+        specifier: 0.6.1-rc3
+        version: 0.6.1-rc3
       '@myriaddreamin/typst.ts':
-        specifier: 0.6.1-rc2
-        version: 0.6.1-rc2(@myriaddreamin/typst-ts-renderer@0.6.1-rc2)(@myriaddreamin/typst-ts-web-compiler@0.6.1-rc2)
+        specifier: 0.6.1-rc3
+        version: 0.6.1-rc3(@myriaddreamin/typst-ts-renderer@0.6.1-rc3)(@myriaddreamin/typst-ts-web-compiler@0.6.1-rc3)
       '@octokit/rest':
         specifier: ^22.0.0
         version: 22.0.0
@@ -36,14 +36,14 @@ importers:
         specifier: ^0.34.3
         version: 0.34.3
       tex2typst:
-        specifier: ^0.3.9
-        version: 0.3.9
+        specifier: ^0.3.21
+        version: 0.3.21
       unified:
         specifier: ^11.0.5
         version: 11.0.5
     devDependencies:
       '@types/node':
-        specifier: ^16.11.6
+        specifier: ^16.18.126
         version: 16.18.126
       '@typescript-eslint/eslint-plugin':
         specifier: 5.29.0
@@ -75,8 +75,8 @@ packages:
   '@codemirror/view@6.38.1':
     resolution: {integrity: sha512-RmTOkE7hRU3OVREqFVITWHz6ocgBjv08GoePscAakgVQfciA3SGCEk7mb9IzwW61cKKmlTpHXG6DUE5Ubx+MGQ==}
 
-  '@emnapi/runtime@1.4.5':
-    resolution: {integrity: sha512-++LApOtY0pEEz1zrd9vy1/zXVaVJJ/EbAF3u0fXIzPJEDtnITsBGbbK0EkM72amhl/R5b+5xx0Y/QhcVOpuulg==}
+  '@emnapi/runtime@1.5.0':
+    resolution: {integrity: sha512-97/BJ3iXHww3djw6hYIfErCZFee7qCtrneuLa20UXFCOTCfBM2cvQHjWJ2EG0s0MtdNwInarqCTz35i4wWXHsQ==}
 
   '@esbuild/android-arm64@0.17.3':
     resolution: {integrity: sha512-XvJsYo3dO3Pi4kpalkyMvfQsjxPWHYjoX4MDiB/FUM4YMfWcXa5l4VCwFWVYI1+92yxqjuqrhNg0CZg3gSouyQ==}
@@ -210,8 +210,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@eslint-community/eslint-utils@4.7.0':
-    resolution: {integrity: sha512-dyybb3AcajC7uha6CvhdVRJqaKyn7w2YKqKyAN37NKYgZT36w+iRb0Dymmc5qEJ549c/S31cMMSFd75bteCpCw==}
+  '@eslint-community/eslint-utils@4.8.0':
+    resolution: {integrity: sha512-MJQFqrZgcW0UNYLGOuQpey/oTN59vyWwplvCGZztn1cKz9agZPPYpJB7h2OMmuu7VLqkvEjN8feFZJmxNF9D+Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
@@ -366,17 +366,17 @@ packages:
   '@marijn/find-cluster-break@1.0.2':
     resolution: {integrity: sha512-l0h88YhZFyKdXIFNfSWpyjStDjGHwZ/U7iobcK1cQQD8sejsONdQtTVU+1wVN1PBw40PiiHB1vA5S7VTfQiP9g==}
 
-  '@myriaddreamin/typst-ts-renderer@0.6.1-rc2':
-    resolution: {integrity: sha512-0RDCCIn2L9k5jfLY9PpKkdrN+akRUpp8bF1w36zSRS12XpIEp/ufz0raDWNi6A+3lzazIa6W3OOdK0EIPyIKzQ==}
+  '@myriaddreamin/typst-ts-renderer@0.6.1-rc3':
+    resolution: {integrity: sha512-m4OHUXYvxDcE6yEvTIl+s7Y721RMWpVTUDXRN2o08P2ckkgxmtloVwHkdCAbrV5w19b5f/fcSaCW2xbxaw+XnA==}
 
-  '@myriaddreamin/typst-ts-web-compiler@0.6.1-rc2':
-    resolution: {integrity: sha512-c52rCB8CQHNvCPNRDKOFmj/TPRAi8icQ/1hfG3cCouml02EpNEKtA5OiZxmz7mPQScmbWQhJw6RZl7M4MOnhRA==}
+  '@myriaddreamin/typst-ts-web-compiler@0.6.1-rc3':
+    resolution: {integrity: sha512-6KD2QKUI1KVcBpKxh/LQX02224NnjMWlRQy/IqtROekDKUdoCoSlf5PV7aETYyI4bA1mtNrzMkBGdCeum/4frA==}
 
-  '@myriaddreamin/typst.ts@0.6.1-rc2':
-    resolution: {integrity: sha512-z3YEp2Nii/N1kR4Gdop0dTBdoW/cKxosdk11rKHd9/g5rtTE77tNf6/ZL/4tU6h9adWqVt/HnspJ7mm1r8lFRA==}
+  '@myriaddreamin/typst.ts@0.6.1-rc3':
+    resolution: {integrity: sha512-pGzaJ5SV0JjrNWn14Bicy0nPTtfD5+4kHwGUDYSebSMbfAtNHfi+Et7k4PiXqunwRm7Obkk5iZufiRM2jOlfbg==}
     peerDependencies:
-      '@myriaddreamin/typst-ts-renderer': ^0.6.1-rc2
-      '@myriaddreamin/typst-ts-web-compiler': ^0.6.1-rc2
+      '@myriaddreamin/typst-ts-renderer': ^0.6.1-rc3
+      '@myriaddreamin/typst-ts-web-compiler': ^0.6.1-rc3
     peerDependenciesMeta:
       '@myriaddreamin/typst-ts-renderer':
         optional: true
@@ -1124,8 +1124,8 @@ packages:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
 
-  tex2typst@0.3.9:
-    resolution: {integrity: sha512-UZJS2C1ZGtfBsfBKSyDTmuzyGm8nswRmMJ25ZsejWJItlKkZSmJUZkFLen5TEDOL4LSX7LHyb2DVLTzuUWkS0A==}
+  tex2typst@0.3.21:
+    resolution: {integrity: sha512-faYgVSWCT9OJR7cm2HN2czL+3ZOkOBqvlQWd4HuZ3L6uVhgmL2UTuX7ApuMDqd8mT0P6HMht8BDBqHOuCzgQQA==}
 
   text-table@0.2.0:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
@@ -1227,7 +1227,7 @@ snapshots:
       style-mod: 4.1.2
       w3c-keyname: 2.2.8
 
-  '@emnapi/runtime@1.4.5':
+  '@emnapi/runtime@1.5.0':
     dependencies:
       tslib: 2.4.0
     optional: true
@@ -1298,7 +1298,7 @@ snapshots:
   '@esbuild/win32-x64@0.17.3':
     optional: true
 
-  '@eslint-community/eslint-utils@4.7.0(eslint@8.57.1)':
+  '@eslint-community/eslint-utils@4.8.0(eslint@8.57.1)':
     dependencies:
       eslint: 8.57.1
       eslint-visitor-keys: 3.4.3
@@ -1407,7 +1407,7 @@ snapshots:
 
   '@img/sharp-wasm32@0.34.3':
     dependencies:
-      '@emnapi/runtime': 1.4.5
+      '@emnapi/runtime': 1.5.0
     optional: true
 
   '@img/sharp-win32-arm64@0.34.3':
@@ -1421,16 +1421,16 @@ snapshots:
 
   '@marijn/find-cluster-break@1.0.2': {}
 
-  '@myriaddreamin/typst-ts-renderer@0.6.1-rc2': {}
+  '@myriaddreamin/typst-ts-renderer@0.6.1-rc3': {}
 
-  '@myriaddreamin/typst-ts-web-compiler@0.6.1-rc2': {}
+  '@myriaddreamin/typst-ts-web-compiler@0.6.1-rc3': {}
 
-  '@myriaddreamin/typst.ts@0.6.1-rc2(@myriaddreamin/typst-ts-renderer@0.6.1-rc2)(@myriaddreamin/typst-ts-web-compiler@0.6.1-rc2)':
+  '@myriaddreamin/typst.ts@0.6.1-rc3(@myriaddreamin/typst-ts-renderer@0.6.1-rc3)(@myriaddreamin/typst-ts-web-compiler@0.6.1-rc3)':
     dependencies:
       idb: 7.1.1
     optionalDependencies:
-      '@myriaddreamin/typst-ts-renderer': 0.6.1-rc2
-      '@myriaddreamin/typst-ts-web-compiler': 0.6.1-rc2
+      '@myriaddreamin/typst-ts-renderer': 0.6.1-rc3
+      '@myriaddreamin/typst-ts-web-compiler': 0.6.1-rc3
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -1773,7 +1773,7 @@ snapshots:
 
   eslint@8.57.1:
     dependencies:
-      '@eslint-community/eslint-utils': 4.7.0(eslint@8.57.1)
+      '@eslint-community/eslint-utils': 4.8.0(eslint@8.57.1)
       '@eslint-community/regexpp': 4.12.1
       '@eslint/eslintrc': 2.1.4
       '@eslint/js': 8.57.1
@@ -2364,7 +2364,7 @@ snapshots:
     dependencies:
       has-flag: 4.0.0
 
-  tex2typst@0.3.9: {}
+  tex2typst@0.3.21: {}
 
   text-table@0.2.0: {}
 

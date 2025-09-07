@@ -1,5 +1,7 @@
-import { $typst } from "@myriaddreamin/typst.ts";
-import { TypstSnippet } from "@myriaddreamin/typst.ts/dist/esm/contrib/snippet.mjs";
+import {
+	TypstSnippet,
+	$typst,
+} from "@myriaddreamin/typst.ts/dist/esm/contrib/snippet.mjs";
 
 interface FontData {
 	postscriptName: string;

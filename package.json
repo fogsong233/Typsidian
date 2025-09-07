@@ -1,6 +1,6 @@
 {
 	"name": "typsdian",
-	"version": "1.0.1",
+	"version": "1.2.0",
 	"description": "This is a plugin for Obsidian (https://obsidian.md)",
 	"main": "main.js",
 	"scripts": {
@@ -12,7 +12,7 @@
 	"author": "",
 	"license": "GPL-3.0-only",
 	"devDependencies": {
-		"@types/node": "^16.11.6",
+		"@types/node": "^16.18.126",
 		"@typescript-eslint/eslint-plugin": "5.29.0",
 		"@typescript-eslint/parser": "5.29.0",
 		"builtin-modules": "3.3.0",
@@ -22,16 +22,16 @@
 		"typescript": "4.7.4"
 	},
 	"dependencies": {
-		"@myriaddreamin/typst-ts-renderer": "0.6.1-rc2",
-		"@myriaddreamin/typst-ts-web-compiler": "0.6.1-rc2",
-		"@myriaddreamin/typst.ts": "0.6.1-rc2",
+		"@myriaddreamin/typst-ts-renderer": "0.6.1-rc3",
+		"@myriaddreamin/typst-ts-web-compiler": "0.6.1-rc3",
+		"@myriaddreamin/typst.ts": "0.6.1-rc3",
 		"@octokit/rest": "^22.0.0",
 		"remark-frontmatter": "^5.0.0",
 		"remark-math": "^6.0.0",
 		"remark-parse": "^11.0.0",
 		"remark-stringify": "^11.0.0",
 		"sharp": "^0.34.3",
-		"tex2typst": "^0.3.9",
+		"tex2typst": "^0.3.21",
 		"unified": "^11.0.5"
 	}
 }

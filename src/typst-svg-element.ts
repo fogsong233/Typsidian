@@ -1,4 +1,4 @@
-import { $typst } from "@myriaddreamin/typst.ts";
+import { $typst } from "@myriaddreamin/typst.ts/dist/esm/contrib/snippet.mjs";
 import TypsidianPlugin from "main";
 
 export default class TypstSvgElement extends HTMLElement {
@@ -19,7 +19,7 @@ export default class TypstSvgElement extends HTMLElement {
 				mainContent: this.typstContent,
 			});
 		} catch (error) {
-			if (this.plugin.settings.enableFallBackToTex) {
+			if (this.plugin.settings.enableFallBackToTexBlock) {
 				this.shadowRoot.appendChild(
 					this.plugin.tex2html(
 						this.typstContent
