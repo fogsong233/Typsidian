@@ -20,7 +20,7 @@ your token and other relevant setting items, otherwise it goes wrong).
 Feel free to issue.
 
 #### TODO:
-- internation support.
+- ~~internation support~~.
 - new converter from typst to latex.
 
 #### Acknowledge
