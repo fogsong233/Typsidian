@@ -3,6 +3,7 @@ import TypsidianPlugin from "main";
 import { fontInit } from "./font";
 import { converterGen } from "./converter";
 import { t } from "./lang/helpers";
+import { Menu, Notice } from "obsidian";
 
 export async function initTypst(plugin: TypsidianPlugin) {
 	// init typst
@@ -21,16 +22,46 @@ export async function initTypst(plugin: TypsidianPlugin) {
 
 export function regCmds(plugin: TypsidianPlugin) {
 	const statusBarItemEl = plugin.addStatusBarItem();
+	statusBarItemEl.id = "typstdian-status";
 	statusBarItemEl.setText(t("statusBarText"));
+	plugin.addRibbonIcon("dice", "Open menu", (event) => {
+		const menu = new Menu();
 
+		menu.addItem((item) =>
+			item
+				.setTitle(t("typst2PNG"))
+				.setIcon("documents")
+				.onClick(() => converterGen(plugin, true))
+		);
+		menu.addItem((item) =>
+			item
+				.setTitle(t("typst2SVG"))
+				.setIcon("documents")
+				.onClick(() => converterGen(plugin, true))
+		);
+
+		menu.showAtMouseEvent(event);
+	});
 	plugin.addCommand({
 		id: "duplicate-normal-note-with-png",
 		name: t("duplicateNormalNoteWithPng"),
-		editorCallback: converterGen(this, true),
+		editorCallback: converterGen(plugin, true),
 	});
 	plugin.addCommand({
 		id: "duplicate-normal-note-with-svg",
 		name: t("duplicateNormalNoteWithSvg"),
-		editorCallback: converterGen(this, false),
+		editorCallback: converterGen(plugin, false),
 	});
+	console.log("aaa");
+	plugin.registerEvent(
+		this.app.workspace.on("editor-menu", (menu: Menu, editor, view) => {
+			menu.addItem((item) => {
+				item.setTitle("Print file path 👈")
+					.setIcon("document")
+					.onClick(async () => {
+						new Notice(view.file.path);
+					});
+			});
+		})
+	);
 }

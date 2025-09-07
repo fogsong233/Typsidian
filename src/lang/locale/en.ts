@@ -12,12 +12,6 @@ export default {
 	enableInlineMathTypst: "Convert inline LaTeX to Typst",
 	enableInlineMathTypstDesc:
 		"$ $ content is converted to typst code, exported as tex",
-	enableTypstRenderCode: "Enable Typst code rendering",
-	enableTypstRenderCodeDesc:
-		"```typrender``` content is automatically converted to typst rendering, exported as PNG",
-	enableTypst2TexInMath:
-		"Export Typst code as LaTeX formula in block math mode",
-	enableTypst2TexInMathDesc: "",
 	enableFallBackToTexInline:
 		"Fallback to tex when Typst inline code conversion fails",
 	enableFallBackToTexInlineDesc:
@@ -37,8 +31,8 @@ export default {
 	supportLocalFonts: "Add local fonts to typst",
 	supportLocalFontsDesc:
 		"Local font names, ignored by default if not found, separated by commas",
-	mathTypstTemplate: "Block Typst Template",
-	mathTypstTemplateDesc: "Block Typst prefix",
+	mathTypstTemplate: "Math Block Typst Template",
+	mathTypstTemplateDesc: "Math Block Typst prefix",
 	typstRenderCodeTemplate: "Typst Render Code Template",
 	typstRenderCodeTemplateDesc: "Typst render code prefix",
 
@@ -67,4 +61,11 @@ export default {
 	remove: "Remove",
 	exampleTemplate:
 		"#set page(width: auto, height: auto, margin: 10pt)\n#set text(size: 16pt)\n{content}",
+	guide: "Guide",
+	guideLink: "https://github.com/fogsong233/Typsidian",
+	uploading: "uploading...",
+	uploadOK: "Okay √",
+
+	typst2PNG: "export typst to png",
+	typst2SVG: "export typst to svg",
 };

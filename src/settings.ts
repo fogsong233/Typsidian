@@ -9,15 +9,11 @@ export interface CustomLanguageTemplate {
 }
 
 export interface TypsidianPluginSettings {
-	enableMathTypst: boolean;
+	enableMathBlockTypst: boolean;
 	enableInlineMathTypst: boolean;
-	enableTypstRenderCode: boolean; // typrender
-	enableTypst2TexInMath: boolean;
 	enableFallBackToTexInline: boolean;
-	enableFallBackToTexBlock: boolean;
 	githubToken: string;
 	mathTypstTemplate: string;
-	typstRenderCodeTemplate: string;
 	usrAndRepo: string; //"xxx/xxx"
 	uploadImageDir: string;
 	supportLocalFonts: string;
@@ -25,23 +21,23 @@ export interface TypsidianPluginSettings {
 }
 
 export const DEFAULT_SETTINGS: TypsidianPluginSettings = {
-	enableMathTypst: true,
+	enableMathBlockTypst: true,
 	enableInlineMathTypst: true,
-	enableTypstRenderCode: true,
-	enableTypst2TexInMath: true,
 	enableFallBackToTexInline: true,
-	enableFallBackToTexBlock: false,
 	githubToken: "",
 	usrAndRepo: "user/repo",
 	uploadImageDir: "typst-images-obsidian",
 	mathTypstTemplate:
-		"#set page(width: auto, height: auto, margin: 10pt) \n #set text(size: 16pt) \n",
-	typstRenderCodeTemplate:
-		"#set page(width: auto, height: auto, margin: 10pt) \n #set text(size: 16pt) \n",
+		"#set page(width: auto, height: auto, margin: 10pt) \n #set text(size: 16pt, fill: if ({IsDarkMode}) { white } else { black }) \n",
 	supportLocalFonts:
 		"PingFang SC, Microsoft YaHei, Noto Serif, Noto Sans, Noto Serif, Noto Serif CJK SC, Noto Sans CJK SC",
 	customLanguageTemplates: [
-		{ language: "typrender", template: "{content}", enabled: true },
+		{
+			language: "typrender",
+			template:
+				"#set page(width: auto, height: auto, margin: 10pt) \n #set text(size: 16pt, fill: if ({IsDarkMode}) { white } else { black }) \n{content}",
+			enabled: true,
+		},
 	],
 };
 export class TypsidianSettingTab extends PluginSettingTab {
@@ -59,6 +55,7 @@ export class TypsidianSettingTab extends PluginSettingTab {
 
 		const titleContainer = containerEl.createEl("div");
 		titleContainer.style.display = "flex";
+		titleContainer.style.flexDirection = "column";
 		titleContainer.style.alignItems = "baseline";
 		titleContainer.style.justifyContent = "space-between";
 		titleContainer.style.marginBottom = "10px";
@@ -70,15 +67,19 @@ export class TypsidianSettingTab extends PluginSettingTab {
 			},
 		});
 		title.style.margin = "0";
+		titleContainer.createEl("a", {
+			text: t("guide"),
+			href: t("guideLink"),
+		});
 
 		new Setting(containerEl)
 			.setName(t("enableMathTypst"))
 			.setDesc(t("enableMathTypstDesc"))
 			.addToggle((toggle) =>
 				toggle
-					.setValue(this.plugin.settings.enableMathTypst)
+					.setValue(this.plugin.settings.enableMathBlockTypst)
 					.onChange(async (value) => {
-						this.plugin.settings.enableMathTypst = value;
+						this.plugin.settings.enableMathBlockTypst = value;
 						await this.plugin.saveSettings();
 					})
 			);
@@ -93,28 +94,7 @@ export class TypsidianSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					})
 			);
-		new Setting(containerEl)
-			.setName(t("enableTypstRenderCode"))
-			.setDesc(t("enableTypstRenderCodeDesc"))
-			.addToggle((toggle) =>
-				toggle
-					.setValue(this.plugin.settings.enableTypstRenderCode)
-					.onChange(async (value) => {
-						this.plugin.settings.enableTypstRenderCode = value;
-						await this.plugin.saveSettings();
-					})
-			);
-		new Setting(containerEl)
-			.setName(t("enableTypst2TexInMath"))
-			.setDesc(t("enableTypst2TexInMathDesc"))
-			.addToggle((toggle) =>
-				toggle
-					.setValue(this.plugin.settings.enableTypst2TexInMath)
-					.onChange(async (value) => {
-						this.plugin.settings.enableTypst2TexInMath = value;
-						await this.plugin.saveSettings();
-					})
-			);
+
 		new Setting(containerEl)
 			.setName(t("enableFallBackToTexInline"))
 			.setDesc(t("enableFallBackToTexInlineDesc"))
@@ -126,17 +106,7 @@ export class TypsidianSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					})
 			);
-		new Setting(containerEl)
-			.setName(t("enableFallBackToTexBlock"))
-			.setDesc(t("enableFallBackToTexBlockDesc"))
-			.addToggle((toggle) =>
-				toggle
-					.setValue(this.plugin.settings.enableFallBackToTexBlock)
-					.onChange(async (value) => {
-						this.plugin.settings.enableFallBackToTexBlock = value;
-						await this.plugin.saveSettings();
-					})
-			);
+
 		new Setting(containerEl)
 			.setName(t("githubToken"))
 			.setDesc(t("githubTokenDesc"))
@@ -193,19 +163,6 @@ export class TypsidianSettingTab extends PluginSettingTab {
 					.setValue(this.plugin.settings.mathTypstTemplate)
 					.onChange(async (value) => {
 						this.plugin.settings.mathTypstTemplate = value;
-						await this.plugin.saveSettings();
-					});
-			});
-		new Setting(containerEl)
-			.setName(t("typstRenderCodeTemplate"))
-			.setDesc(t("typstRenderCodeTemplateDesc"))
-			.addTextArea((text) => {
-				text.setPlaceholder(
-					"#set(width: auto, height: auto, margin: 10pt) \n"
-				)
-					.setValue(this.plugin.settings.typstRenderCodeTemplate)
-					.onChange(async (value) => {
-						this.plugin.settings.typstRenderCodeTemplate = value;
 						await this.plugin.saveSettings();
 					});
 			});

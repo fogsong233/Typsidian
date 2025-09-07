@@ -10,11 +10,6 @@ export default {
 	enableMathTypstDesc: "$$ $$内容被转换typst代码,导出默认用png图片",
 	enableInlineMathTypst: "行内latex转换成Typst",
 	enableInlineMathTypstDesc: "$$内容被转换typst代码， 导出时用tex导出",
-	enableTypstRenderCode: "开启Typst code渲染代码",
-	enableTypstRenderCodeDesc:
-		"```typrender```内容自动转为typst渲染，导出为png",
-	enableTypst2TexInMath: "段落数学模式下的Typst代码导出为latex公式",
-	enableTypst2TexInMathDesc: "",
 	enableFallBackToTexInline: "Typst inline代码转换失败时回退到tex",
 	enableFallBackToTexInlineDesc: "如果开启，Typst代码转换失败时回退到tex",
 	enableFallBackToTexBlock: "Typst block代码转换失败时回退到tex",
@@ -28,7 +23,7 @@ export default {
 	supportLocalFonts: "向 typst 添加本地字体",
 	supportLocalFontsDesc: "本地字体的字体名, 没有会默认忽略, 用逗号分隔",
 	mathTypstTemplate: "段落Typst模板",
-	mathTypstTemplateDesc: "段落Typst前缀",
+	mathTypstTemplateDesc: "数学段落Typst前缀",
 	typstRenderCodeTemplate: "Typst渲染代码模板",
 	typstRenderCodeTemplateDesc: "Typst渲染代码前缀",
 
@@ -55,4 +50,10 @@ export default {
 	remove: "删除",
 	exampleTemplate:
 		"#set page(width: auto, height: auto, margin: 10pt)\n#set text(size: 16pt)\n{content}",
+	guide: "指南",
+	guideLink: "https://zhuanlan.zhihu.com/p/1936210614520361485",
+	uploading: "上传中...",
+	uploadOK: "成功",
+	typst2PNG: "typst代码导出为png",
+	typst2SVG: "typst代码导出为svg",
 };

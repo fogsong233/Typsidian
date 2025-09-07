@@ -19,20 +19,7 @@ export default class TypstSvgElement extends HTMLElement {
 				mainContent: this.typstContent,
 			});
 		} catch (error) {
-			if (this.plugin.settings.enableFallBackToTexBlock) {
-				this.shadowRoot.appendChild(
-					this.plugin.tex2html(
-						this.typstContent
-							.split("/*__typsidian-divider*/") // remove the template content
-							.slice(-1),
-						{
-							display: !this.isinline,
-						}
-					)
-				);
-				return;
-			}
-			svgText = error;
+			svgText = "in: " + this.typstContent + "\n" + error;
 		}
 
 		// 确保 shadowRoot 存在

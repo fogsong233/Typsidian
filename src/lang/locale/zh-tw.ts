@@ -10,11 +10,6 @@ export default {
 	enableMathTypstDesc: "$$ $$內容被轉換typst代碼,匯出預設用png圖片",
 	enableInlineMathTypst: "行內latex轉換成Typst",
 	enableInlineMathTypstDesc: "$$內容被轉換typst代碼， 匯出時用tex匯出",
-	enableTypstRenderCode: "開啟Typst code渲染代碼",
-	enableTypstRenderCodeDesc:
-		"```typrender```內容自動轉為typst渲染，匯出為png",
-	enableTypst2TexInMath: "段落數學模式下的Typst代碼匯出為latex公式",
-	enableTypst2TexInMathDesc: "",
 	enableFallBackToTexInline: "Typst inline代碼轉換失敗時回退到tex",
 	enableFallBackToTexInlineDesc: "如果開啟，Typst代碼轉換失敗時回退到tex",
 	enableFallBackToTexBlock: "Typst block代碼轉換失敗時回退到tex",
@@ -55,4 +50,8 @@ export default {
 	remove: "刪除",
 	exampleTemplate:
 		"#set page(width: auto, height: auto, margin: 10pt)\n#set text(size: 16pt)\n{content}",
+	guide: "指南",
+	guideLink: "https://zhuanlan.zhihu.com/p/1936210614520361485",
+	uploading: "上传中...",
+	uploadOK: "成功",
 };

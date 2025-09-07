@@ -1,4 +1,4 @@
-import { MarkdownView, Plugin, loadMathJax } from "obsidian";
+import { MarkdownView, Menu, Notice, Plugin, loadMathJax } from "obsidian";
 import {
 	DEFAULT_SETTINGS,
 	TypsidianPluginSettings,
@@ -9,6 +9,7 @@ import TypstSvgElement from "src/typst-svg-element";
 import { t } from "src/lang/helpers";
 
 import { initTypst, regCmds } from "src/init";
+import { isDarkMode } from "src/util";
 declare const MathJax: any;
 
 export default class TypsidianPlugin extends Plugin {
@@ -30,6 +31,9 @@ export default class TypsidianPlugin extends Plugin {
 			this.typstTex2Html(e, r);
 
 		// Register custom language template processors
+		this.registerMarkdownCodeBlockProcessor("t-latex", (source, el, _) => {
+			el.appendChild(this.tex2html(source, { display: true }));
+		});
 		this.registerCustomLanguageProcessors();
 	}
 
@@ -62,22 +66,28 @@ export default class TypsidianPlugin extends Plugin {
 		// Register custom language template processors
 		this.settings.customLanguageTemplates.forEach((template) => {
 			if (template.enabled && template.language.trim()) {
-				this.registerMarkdownCodeBlockProcessor(
-					template.language,
-					(source, el, ctx) => {
-						const typstEl = document.createElement(
-							"typst-svg"
-						) as TypstSvgElement;
-						// Replace {content} placeholder with user input
-						const processedContent = template.template.replace(
-							/\{content\}/g,
-							source
-						);
-						typstEl.typstContent = processedContent;
-						typstEl.plugin = this;
-						el.appendChild(typstEl);
-					}
-				);
+				try {
+					this.registerMarkdownCodeBlockProcessor(
+						template.language,
+						(source, el, ctx) => {
+							const typstEl = document.createElement(
+								"typst-svg"
+							) as TypstSvgElement;
+							// Replace {content} placeholder with user input
+							const processedContent = template.template
+								.replace(
+									"{IsDarkMode}",
+									isDarkMode() ? "true" : "false"
+								)
+								.replace(/\{content\}/g, source);
+							typstEl.typstContent = processedContent;
+							typstEl.plugin = this;
+							el.appendChild(typstEl);
+						}
+					);
+				} catch {
+					console.log("");
+				}
 			}
 		});
 	}
@@ -85,20 +95,19 @@ export default class TypsidianPlugin extends Plugin {
 	typstTex2Html(source: string, r: { display: boolean }): ChildNode | null {
 		try {
 			if (r.display) {
-				if (this.settings.enableMathTypst) {
-					if (this.settings.enableTypst2TexInMath) {
-						return this.tex2html(typst2tex(source), r);
-					} else {
-						TypstSvgElement.regisiter();
-						const el = document.createElement(
-							"typst-svg"
-						) as TypstSvgElement;
-						el.typstContent = `${this.settings.mathTypstTemplate} \n 
+				if (this.settings.enableMathBlockTypst) {
+					TypstSvgElement.regisiter();
+					const el = document.createElement(
+						"typst-svg"
+					) as TypstSvgElement;
+					el.typstContent = `${this.settings.mathTypstTemplate.replace(
+						"{IsDarkMode}",
+						isDarkMode() ? "true" : "false"
+					)} \n 
 						/*__typsidian-divider*/
 						$ ${source} $`;
-						el.plugin = this;
-						return el;
-					}
+					el.plugin = this;
+					return el;
 				}
 			} else if (this.settings.enableInlineMathTypst) {
 				if (source.includes("\\")) {
@@ -108,9 +117,6 @@ export default class TypsidianPlugin extends Plugin {
 			}
 			return this.tex2html(source, r);
 		} catch (error) {
-			if (this.settings.enableFallBackToTexBlock && r.display) {
-				return this.tex2html(source, r);
-			}
 			if (this.settings.enableFallBackToTexInline && !r.display) {
 				return this.tex2html(source, r);
 			}
