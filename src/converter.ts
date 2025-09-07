@@ -107,7 +107,8 @@ async function processNodes(
 }
 
 function isLatexNode(node: MDNode): boolean {
-	return node.type === "code" && node.lang === "t-latex";
+	console.log(node);
+	return node.type === "code" && node.lang.trim() === "t-latex";
 }
 
 function isTypstCode(node: MDNode, plugin: TypsidianPlugin): boolean {
@@ -121,7 +122,9 @@ function isTypstCode(node: MDNode, plugin: TypsidianPlugin): boolean {
 
 function isTypstMath(node: MDNode, plugin: TypsidianPlugin): boolean {
 	return (
-		(node.type === "math" && plugin.settings.enableMathBlockTypst) ||
+		(node.type === "math" &&
+			plugin.settings.enableMathBlockTypst &&
+			node.lang == undefined) ||
 		(node.type === "inlineMath" && plugin.settings.enableInlineMathTypst)
 	);
 }
