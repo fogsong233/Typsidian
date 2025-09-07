@@ -52,16 +52,4 @@ export function regCmds(plugin: TypsidianPlugin) {
 		name: t("duplicateNormalNoteWithSvg"),
 		editorCallback: converterGen(plugin, false),
 	});
-	console.log("aaa");
-	plugin.registerEvent(
-		this.app.workspace.on("editor-menu", (menu: Menu, editor, view) => {
-			menu.addItem((item) => {
-				item.setTitle("Print file path 👈")
-					.setIcon("document")
-					.onClick(async () => {
-						new Notice(view.file.path);
-					});
-			});
-		})
-	);
 }
