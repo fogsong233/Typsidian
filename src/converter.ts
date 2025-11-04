@@ -219,7 +219,9 @@ async function handleTypstMath(
 		try {
 			await $typst.svg({ mainContent: node.value });
 			node.value = typst2tex(node.value).replace("\n", " ");
-		} catch {}
+		} catch {
+			/**/
+		}
 	}
 	return node;
 }
@@ -257,6 +259,7 @@ async function visit<E>(
 		stack.push(root);
 	}
 	while (stack.length > 0) {
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const parentNode = stack.pop()!;
 		const children = getChildren(parentNode);
 		for (const [index, child] of children.entries()) {

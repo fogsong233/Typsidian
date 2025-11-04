@@ -3,11 +3,9 @@ Typsidian is a plugin of [Obsidian](https://obsidian.md/), which provides relete
 
 中文介绍看这里:  https://zhuanlan.zhihu.com/p/1936210614520361485
 
-You can modify settings to make any of `$..$`, `$$...$$`, and code block
-whose language is `typrender`.
-
+Custom area that
 display typst code rather than latex code, and it provides
-that when typst parsing gets errors, display automatically
+that(only inline) when typst parsing gets errors, display automatically
 return to latex(please enable it in settings).
 
 And when you are focus on a note, open command panel:
@@ -18,6 +16,11 @@ uploaded to github, therefore you should ensure you add
 your token and other relevant setting items, otherwise it goes wrong).
 
 Feel free to issue.
+
+#### Usage
+Open the setting panel to see what you can do,
+you can enable typst rendering in
+math block, math inline, and customized lang block.
 
 #### TODO:
 - ~~internation support~~.

@@ -12,6 +12,7 @@ export interface TypsidianPluginSettings {
 	enableMathBlockTypst: boolean;
 	enableInlineMathTypst: boolean;
 	enableFallBackToTexInline: boolean;
+	enableFallbackToTexBlock: boolean;
 	githubToken: string;
 	mathTypstTemplate: string;
 	usrAndRepo: string; //"xxx/xxx"
@@ -24,6 +25,7 @@ export const DEFAULT_SETTINGS: TypsidianPluginSettings = {
 	enableMathBlockTypst: true,
 	enableInlineMathTypst: true,
 	enableFallBackToTexInline: true,
+	enableFallbackToTexBlock: true,
 	githubToken: "",
 	usrAndRepo: "user/repo",
 	uploadImageDir: "typst-images-obsidian",
@@ -98,6 +100,18 @@ export class TypsidianSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName(t("enableFallBackToTexInline"))
 			.setDesc(t("enableFallBackToTexInlineDesc"))
+			.addToggle((toggle) =>
+				toggle
+					.setValue(this.plugin.settings.enableFallBackToTexInline)
+					.onChange(async (value) => {
+						this.plugin.settings.enableFallBackToTexInline = value;
+						await this.plugin.saveSettings();
+					})
+			);
+
+		new Setting(containerEl)
+			.setName(t("enableFallBackToTexBlock"))
+			.setDesc(t("enableFallBackToTexBlockDesc"))
 			.addToggle((toggle) =>
 				toggle
 					.setValue(this.plugin.settings.enableFallBackToTexInline)
