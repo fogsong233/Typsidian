@@ -3,7 +3,7 @@ import TypsidianPlugin from "main";
 import { fontInit } from "./font";
 import { converterGen } from "./converter";
 import { t } from "./lang/helpers";
-import { Menu, Notice } from "obsidian";
+import { Menu } from "obsidian";
 
 export async function initTypst(plugin: TypsidianPlugin) {
 	// init typst
@@ -15,6 +15,8 @@ export async function initTypst(plugin: TypsidianPlugin) {
 		getModule: () =>
 			"https://cdn.jsdelivr.net/npm/@myriaddreamin/typst-ts-renderer/pkg/typst_ts_renderer_bg.wasm",
 	});
+
+	$typst.svg({ mainContent: "hello !" });
 
 	// add font
 	await fontInit(plugin.settings.supportLocalFonts);
