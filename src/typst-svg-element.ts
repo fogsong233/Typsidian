@@ -9,7 +9,6 @@ export default class TypstSvgElement extends HTMLElement {
 	typstContent: string;
 	plugin: TypsidianPlugin;
 	isinline: boolean;
-	r: { display: boolean };
 	source = "";
 
 	constructor() {
@@ -26,8 +25,10 @@ export default class TypstSvgElement extends HTMLElement {
 			});
 		} catch (error) {
 			// fallback to latex (using katex)
-			console.log("typst svg", error)
-			if (this.plugin.settings.enableFallBackToTexInline && this.r.display) {
+			// 看了下 main.ts, 这里好像是只有 block 才会触发, inline 则是直接使用 typst2tex.
+			if (this.plugin.settings.enableFallBackToTexInline && this.isinline) {
+				svgText = texToSvg(this.source, !this.isinline);
+			} else if (this.plugin.settings.enableFallbackToTexBlock && !this.isinline) {
 				svgText = texToSvg(this.source, !this.isinline);
 			} else {
 				svgText += "in: " + this.typstContent + "\n" + error;
