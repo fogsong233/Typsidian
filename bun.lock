@@ -8,6 +8,7 @@
         "@myriaddreamin/typst-ts-web-compiler": "^0.7.0-rc1",
         "@myriaddreamin/typst.ts": "^0.7.0-rc1",
         "@octokit/rest": "^22.0.0",
+        "katex": "^0.16.25",
         "remark-frontmatter": "^5.0.0",
         "remark-math": "^6.0.0",
         "remark-parse": "^11.0.0",

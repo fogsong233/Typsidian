@@ -100,10 +100,12 @@ export default class TypsidianPlugin extends Plugin {
 					const el = document.createElement(
 						"typst-svg"
 					) as TypstSvgElement;
+					el.r = r;
+					el.source = source;
 					el.typstContent = `${this.settings.mathTypstTemplate.replace(
 						"{IsDarkMode}",
 						isDarkMode() ? "true" : "false"
-					)} \n 
+					)} \n
 						/*__typsidian-divider*/
 						$ ${source} $`;
 					el.plugin = this;

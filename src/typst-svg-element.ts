@@ -1,15 +1,27 @@
 import { $typst } from "@myriaddreamin/typst.ts/dist/esm/contrib/snippet.mjs";
+import * as katex from "katex";
 import TypsidianPlugin from "main";
+declare const MathJax: any;
 
 export default class TypstSvgElement extends HTMLElement {
 	typstContent: string;
 	plugin: TypsidianPlugin;
 	isinline: boolean;
+	r: { display: boolean };
+	source = "";
 
 	constructor() {
 		super();
 		this.attachShadow({ mode: "open" });
 		this.isinline = false; // 默认为 false
+	}
+
+	async tex2svg(source: string): Promise<string> {
+		return katex.renderToString(source, {
+			output: "mathml",
+			displayMode: !this.isinline,
+			throwOnError: false,
+		})
 	}
 
 	async connectedCallback() {
@@ -19,7 +31,13 @@ export default class TypstSvgElement extends HTMLElement {
 				mainContent: this.typstContent,
 			});
 		} catch (error) {
-			svgText = "in: " + this.typstContent + "\n" + error;
+			// fallback to latex (using katex)
+			console.log("typst svg", error)
+			if (this.plugin.settings.enableFallBackToTexInline && this.r.display) {
+				svgText = await this.tex2svg(this.source);
+			} else {
+				svgText += "in: " + this.typstContent + "\n" + error;
+			}
 		}
 
 		// 确保 shadowRoot 存在
