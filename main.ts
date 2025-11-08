@@ -1,4 +1,4 @@
-import { MarkdownView, Menu, Notice, Plugin, loadMathJax } from "obsidian";
+import { MarkdownView, Plugin, loadMathJax } from "obsidian";
 import {
 	DEFAULT_SETTINGS,
 	TypsidianPluginSettings,
@@ -10,10 +10,12 @@ import { t } from "src/lang/helpers";
 
 import { initTypst, regCmds } from "src/init";
 import { isDarkMode } from "src/util";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const MathJax: any;
 
 export default class TypsidianPlugin extends Plugin {
 	settings: TypsidianPluginSettings;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	tex2html: any; // mathjax tex2chtml function
 	async onload() {
 		await this.loadSettings();
@@ -119,7 +121,11 @@ export default class TypsidianPlugin extends Plugin {
 			}
 			return this.tex2html(source, r);
 		} catch (error) {
+			// choose either to fallback to tex or print the error info
 			if (this.settings.enableFallBackToTexInline && !r.display) {
+				return this.tex2html(source, r);
+			}
+			if (this.settings.enableFallbackToTexBlock && r.display) {
 				return this.tex2html(source, r);
 			}
 			const renderedString = `<span style="color: red;">${error}</span>`;
