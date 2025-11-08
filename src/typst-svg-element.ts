@@ -1,7 +1,9 @@
 import { $typst } from "@myriaddreamin/typst.ts/dist/esm/contrib/snippet.mjs";
 import * as katex from "katex";
 import TypsidianPlugin from "main";
-declare const MathJax: any;
+import { tex2typst } from "tex2typst";
+import { texToSvg } from "./mathjax-render-svg";
+
 
 export default class TypstSvgElement extends HTMLElement {
 	typstContent: string;
@@ -16,14 +18,6 @@ export default class TypstSvgElement extends HTMLElement {
 		this.isinline = false; // 默认为 false
 	}
 
-	async tex2svg(source: string): Promise<string> {
-		return katex.renderToString(source, {
-			output: "mathml",
-			displayMode: !this.isinline,
-			throwOnError: false,
-		})
-	}
-
 	async connectedCallback() {
 		let svgText = "";
 		try {
@@ -34,7 +28,7 @@ export default class TypstSvgElement extends HTMLElement {
 			// fallback to latex (using katex)
 			console.log("typst svg", error)
 			if (this.plugin.settings.enableFallBackToTexInline && this.r.display) {
-				svgText = await this.tex2svg(this.source);
+				svgText = texToSvg(this.source, !this.isinline);
 			} else {
 				svgText += "in: " + this.typstContent + "\n" + error;
 			}
