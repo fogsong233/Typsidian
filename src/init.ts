@@ -21,7 +21,10 @@ export async function initTypst(plugin: TypsidianPlugin) {
 	$typst.svg({ mainContent: "hello !" });
 
 	// add font
-	await fontInit(plugin.settings.supportLocalFonts);
+	try {
+		await fontInit(plugin.settings.supportLocalFonts);
+	} catch (e) {
+	}
 }
 
 export function regCmds(plugin: TypsidianPlugin) {
