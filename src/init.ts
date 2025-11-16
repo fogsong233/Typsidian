@@ -18,13 +18,10 @@ export async function initTypst(plugin: TypsidianPlugin) {
 			plugin.settings.tsRendererWasmUrl
 	});
 
-	$typst.svg({ mainContent: "hello !" });
-
 	// add font
-	try {
-		await fontInit(plugin.settings.supportLocalFonts);
-	} catch (e) {
-	}
+	await fontInit(plugin.settings.supportLocalFonts);
+
+	$typst.svg({ mainContent: "hello !" });
 }
 
 export function regCmds(plugin: TypsidianPlugin) {
