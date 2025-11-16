@@ -16,10 +16,10 @@ export async function initTypst(plugin: TypsidianPlugin) {
 			"https://cdn.jsdelivr.net/npm/@myriaddreamin/typst-ts-renderer/pkg/typst_ts_renderer_bg.wasm",
 	});
 
-	$typst.svg({ mainContent: "hello !" });
-
 	// add font
 	await fontInit(plugin.settings.supportLocalFonts);
+
+	$typst.svg({ mainContent: "hello !" });
 }
 
 export function regCmds(plugin: TypsidianPlugin) {
