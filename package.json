@@ -22,10 +22,11 @@
 		"typescript": "4.7.4"
 	},
 	"dependencies": {
-		"@myriaddreamin/typst-ts-renderer": "0.6.1-rc3",
-		"@myriaddreamin/typst-ts-web-compiler": "0.6.1-rc3",
-		"@myriaddreamin/typst.ts": "0.6.1-rc3",
+		"@myriaddreamin/typst-ts-renderer": "^0.7.0-rc1",
+		"@myriaddreamin/typst-ts-web-compiler": "^0.7.0-rc1",
+		"@myriaddreamin/typst.ts": "^0.7.0-rc1",
 		"@octokit/rest": "^22.0.0",
+		"mathjax-full": "^3.2.2",
 		"remark-frontmatter": "^5.0.0",
 		"remark-math": "^6.0.0",
 		"remark-parse": "^11.0.0",

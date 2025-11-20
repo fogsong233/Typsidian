@@ -9,17 +9,19 @@ export async function initTypst(plugin: TypsidianPlugin) {
 	// init typst
 	$typst.setCompilerInitOptions({
 		getModule: () =>
-			"https://cdn.jsdelivr.net/npm/@myriaddreamin/typst-ts-web-compiler/pkg/typst_ts_web_compiler_bg.wasm",
+			// "https://cdn.jsdelivr.net/npm/@myriaddreamin/typst-ts-web-compiler/pkg/typst_ts_web_compiler_bg.wasm",
+			plugin.settings.webCompilerWasmUrl
 	});
 	$typst.setRendererInitOptions({
 		getModule: () =>
-			"https://cdn.jsdelivr.net/npm/@myriaddreamin/typst-ts-renderer/pkg/typst_ts_renderer_bg.wasm",
+			// "https://cdn.jsdelivr.net/npm/@myriaddreamin/typst-ts-renderer/pkg/typst_ts_renderer_bg.wasm",
+			plugin.settings.tsRendererWasmUrl
 	});
-
-	$typst.svg({ mainContent: "hello !" });
 
 	// add font
 	await fontInit(plugin.settings.supportLocalFonts);
+
+	$typst.svg({ mainContent: "hello !" });
 }
 
 export function regCmds(plugin: TypsidianPlugin) {
