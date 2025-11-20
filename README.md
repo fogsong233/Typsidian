@@ -18,6 +18,8 @@ your token and other relevant setting items, otherwise it goes wrong).
 Feel free to issue.
 
 #### Usage
+Download `plugin.zip` in Release, unzip it in the plugin dir of obsidian.
+
 Open the setting panel to see what you can do,
 you can enable typst rendering in
 math block, math inline, and customized lang block.
