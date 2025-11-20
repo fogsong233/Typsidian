@@ -64,6 +64,13 @@ jobs:
             - name: Build plugin-2
               run: pnpm run version
 
+            # Step 5.5: Create the plugin.zip file
+            # 步骤5.5：创建 plugin.zip 文件
+            # 注意：这将保留 wasm/ 目录结构 (即 zip 内部会有 wasm/ 文件夹)
+            - name: Zip plugin
+              run: |
+                  zip plugin.zip main.js manifest.json styles.css typst/*.wasm
+
             # Step 6: Create a GitHub Release.
             # 步骤6：创建GitHub Release。
             - name: Create Release
@@ -84,8 +91,9 @@ jobs:
                   # Attach the specified files to the release.
                   # If 'styles.css' does not exist, the action will simply not include it.
                   # 将指定的文件作为附件上传到 Release。
-                  # 如果 'styles.css' 不存在，此操作将不会包含它。
                   files: |
                       main.js
                       manifest.json
                       styles.css
+                      plugin.zip
+                      typst/*.wasm

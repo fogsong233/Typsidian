@@ -1,13 +1,10 @@
 import { $typst } from "@myriaddreamin/typst.ts/dist/esm/contrib/snippet.mjs";
 import TypsidianPlugin from "main";
-import { texToSvg } from "./mathjax-render-svg";
-
 
 export default class TypstSvgElement extends HTMLElement {
 	typstContent: string;
 	plugin: TypsidianPlugin;
 	isinline: boolean;
-	source = "";
 
 	constructor() {
 		super();
@@ -22,16 +19,7 @@ export default class TypstSvgElement extends HTMLElement {
 				mainContent: this.typstContent,
 			});
 		} catch (error) {
-			// fallback to latex (using mathjax)
-			// 看了下 main.ts, 这里好像是只有 block 才会触发, inline 则是直接使用 typst2tex.
-
-			if (this.plugin.settings.enableFallBackToTexInline && this.isinline) {
-				svgText = texToSvg(this.source, !this.isinline);
-			} else if (this.plugin.settings.enableFallbackToTexBlock && !this.isinline) {
-				svgText = texToSvg(this.source, !this.isinline);
-			} else {
-				svgText += "in: " + this.typstContent + "\n" + error;
-			}
+			svgText = "in: " + this.typstContent + "\n" + error;
 		}
 
 		// 确保 shadowRoot 存在

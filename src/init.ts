@@ -4,18 +4,17 @@ import { fontInit } from "./font";
 import { converterGen } from "./converter";
 import { t } from "./lang/helpers";
 import { Menu } from "obsidian";
+import { loadPluginResource } from "./file";
 
 export async function initTypst(plugin: TypsidianPlugin) {
 	// init typst
 	$typst.setCompilerInitOptions({
-		getModule: () =>
-			// "https://cdn.jsdelivr.net/npm/@myriaddreamin/typst-ts-web-compiler/pkg/typst_ts_web_compiler_bg.wasm",
-			plugin.settings.webCompilerWasmUrl
+		getModule: async () =>
+			await loadPluginResource(plugin, "typst_ts_web_compiler_bg.wasm"),
 	});
 	$typst.setRendererInitOptions({
-		getModule: () =>
-			// "https://cdn.jsdelivr.net/npm/@myriaddreamin/typst-ts-renderer/pkg/typst_ts_renderer_bg.wasm",
-			plugin.settings.tsRendererWasmUrl
+		getModule: async () =>
+			await loadPluginResource(plugin, "typst_ts_renderer_bg.wasm"),
 	});
 
 	// add font

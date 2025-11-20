@@ -19,8 +19,6 @@ export interface TypsidianPluginSettings {
 	uploadImageDir: string;
 	supportLocalFonts: string;
 	customLanguageTemplates: CustomLanguageTemplate[];
-	webCompilerWasmUrl: string;
-	tsRendererWasmUrl: string;
 }
 
 export const DEFAULT_SETTINGS: TypsidianPluginSettings = {
@@ -43,8 +41,6 @@ export const DEFAULT_SETTINGS: TypsidianPluginSettings = {
 			enabled: true,
 		},
 	],
-	webCompilerWasmUrl: "https://cdn.jsdelivr.net/npm/@myriaddreamin/typst-ts-web-compiler/pkg/typst_ts_web_compiler_bg.wasm",
-	tsRendererWasmUrl: "https://cdn.jsdelivr.net/npm/@myriaddreamin/typst-ts-renderer/pkg/typst_ts_renderer_bg.wasm"
 };
 export class TypsidianSettingTab extends PluginSettingTab {
 	plugin: TypsidianPlugin;
@@ -77,28 +73,6 @@ export class TypsidianSettingTab extends PluginSettingTab {
 			text: t("guide"),
 			href: t("guideLink"),
 		});
-
-		new Setting(containerEl)
-			.setName("typst.ts 编译器 wasm url")
-			.addText((text) =>
-				text
-					.setValue(this.plugin.settings.webCompilerWasmUrl)
-					.onChange(async (value) => {
-						this.plugin.settings.webCompilerWasmUrl = value;
-						await this.plugin.saveSettings();
-					})
-			);
-
-		new Setting(containerEl)
-			.setName("typst.ts 渲染器 wasm url")
-			.addText((text) =>
-				text
-					.setValue(this.plugin.settings.tsRendererWasmUrl)
-					.onChange(async (value) => {
-						this.plugin.settings.tsRendererWasmUrl = value;
-						await this.plugin.saveSettings();
-					})
-			);
 
 		new Setting(containerEl)
 			.setName(t("enableMathTypst"))
