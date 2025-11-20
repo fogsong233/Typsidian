@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@myriaddreamin/typst-ts-renderer':
-        specifier: 0.6.1-rc3
-        version: 0.6.1-rc3
+        specifier: ^0.7.0-rc1
+        version: 0.7.0-rc1
       '@myriaddreamin/typst-ts-web-compiler':
-        specifier: 0.6.1-rc3
-        version: 0.6.1-rc3
+        specifier: ^0.7.0-rc1
+        version: 0.7.0-rc1
       '@myriaddreamin/typst.ts':
-        specifier: 0.6.1-rc3
-        version: 0.6.1-rc3(@myriaddreamin/typst-ts-renderer@0.6.1-rc3)(@myriaddreamin/typst-ts-web-compiler@0.6.1-rc3)
+        specifier: ^0.7.0-rc1
+        version: 0.7.0-rc1(@myriaddreamin/typst-ts-renderer@0.7.0-rc1)(@myriaddreamin/typst-ts-web-compiler@0.7.0-rc1)
       '@octokit/rest':
         specifier: ^22.0.0
         version: 22.0.0
@@ -366,17 +366,17 @@ packages:
   '@marijn/find-cluster-break@1.0.2':
     resolution: {integrity: sha512-l0h88YhZFyKdXIFNfSWpyjStDjGHwZ/U7iobcK1cQQD8sejsONdQtTVU+1wVN1PBw40PiiHB1vA5S7VTfQiP9g==}
 
-  '@myriaddreamin/typst-ts-renderer@0.6.1-rc3':
-    resolution: {integrity: sha512-m4OHUXYvxDcE6yEvTIl+s7Y721RMWpVTUDXRN2o08P2ckkgxmtloVwHkdCAbrV5w19b5f/fcSaCW2xbxaw+XnA==}
+  '@myriaddreamin/typst-ts-renderer@0.7.0-rc1':
+    resolution: {integrity: sha512-Dd0xP0THKiUwYVTX+2FW4gzBl4i3BNWLAO/ZAReSCkbaPiFb6py5heSvXX0vtH8sXsFQOB3qhxz68sEcq9oRKg==}
 
-  '@myriaddreamin/typst-ts-web-compiler@0.6.1-rc3':
-    resolution: {integrity: sha512-6KD2QKUI1KVcBpKxh/LQX02224NnjMWlRQy/IqtROekDKUdoCoSlf5PV7aETYyI4bA1mtNrzMkBGdCeum/4frA==}
+  '@myriaddreamin/typst-ts-web-compiler@0.7.0-rc1':
+    resolution: {integrity: sha512-ICSdiR6U0GH1wqDKRYpvVWV9TBmA0kD0IPQwl0f2BhlHj4qrOPtC5GfSXGxzRiGNUou/Mhr9V8f2wgzBIp4P4Q==}
 
-  '@myriaddreamin/typst.ts@0.6.1-rc3':
-    resolution: {integrity: sha512-pGzaJ5SV0JjrNWn14Bicy0nPTtfD5+4kHwGUDYSebSMbfAtNHfi+Et7k4PiXqunwRm7Obkk5iZufiRM2jOlfbg==}
+  '@myriaddreamin/typst.ts@0.7.0-rc1':
+    resolution: {integrity: sha512-IZ78l1iLTMM61pf1SmqtojkgM2aloQVSzlNvStKtYu+qleOEzh/ph7zTNmfM8j5vlflCkos85E+UKQvLdC9C7Q==}
     peerDependencies:
-      '@myriaddreamin/typst-ts-renderer': ^0.6.1-rc3
-      '@myriaddreamin/typst-ts-web-compiler': ^0.6.1-rc3
+      '@myriaddreamin/typst-ts-renderer': ^0.7.0-rc1
+      '@myriaddreamin/typst-ts-web-compiler': ^0.7.0-rc1
     peerDependenciesMeta:
       '@myriaddreamin/typst-ts-renderer':
         optional: true
@@ -1421,16 +1421,16 @@ snapshots:
 
   '@marijn/find-cluster-break@1.0.2': {}
 
-  '@myriaddreamin/typst-ts-renderer@0.6.1-rc3': {}
+  '@myriaddreamin/typst-ts-renderer@0.7.0-rc1': {}
 
-  '@myriaddreamin/typst-ts-web-compiler@0.6.1-rc3': {}
+  '@myriaddreamin/typst-ts-web-compiler@0.7.0-rc1': {}
 
-  '@myriaddreamin/typst.ts@0.6.1-rc3(@myriaddreamin/typst-ts-renderer@0.6.1-rc3)(@myriaddreamin/typst-ts-web-compiler@0.6.1-rc3)':
+  '@myriaddreamin/typst.ts@0.7.0-rc1(@myriaddreamin/typst-ts-renderer@0.7.0-rc1)(@myriaddreamin/typst-ts-web-compiler@0.7.0-rc1)':
     dependencies:
       idb: 7.1.1
     optionalDependencies:
-      '@myriaddreamin/typst-ts-renderer': 0.6.1-rc3
-      '@myriaddreamin/typst-ts-web-compiler': 0.6.1-rc3
+      '@myriaddreamin/typst-ts-renderer': 0.7.0-rc1
+      '@myriaddreamin/typst-ts-web-compiler': 0.7.0-rc1
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
