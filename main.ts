@@ -115,7 +115,11 @@ export default class TypsidianPlugin extends Plugin {
 				if (source.includes("\\")) {
 					throw new Error(t("illegalTypstMathCode"));
 				}
-				return this.tex2html(typst2tex(source), r);
+				let renderedNode = this.tex2html(typst2tex(source), r);
+				if (renderedNode.querySelectorAll('[style*="color: red"]').length > 0) {
+					throw new Error(t("illegalTypstMathCode"));
+				}
+				return renderedNode;
 			}
 			return this.tex2html(source, r);
 		} catch (error) {
